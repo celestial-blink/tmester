@@ -1,0 +1,178 @@
+@import './_colors.pcss';
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: #606c88;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    font-family: 'Oxanium', cursive;
+}
+
+button, input {
+    outline: none;
+    border: none;
+}
+
+i {
+    points-event: none;
+}
+
+.wrapper-tmester {
+    max-width: 700px;
+    background-color: white;
+    min-width: 330px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    row-gap: .3em;
+    header {
+        background-color: white;
+        border-bottom: 1px solid #ccc;
+        display: inherit;
+        padding: .3em .5em;
+        min-height: 50px;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        left: 0;
+        align-items: center;
+        img {
+            height: 40px;
+        }
+        section {
+            width: 120px;
+            display: inherit;
+            justify-content: space-between;
+            align-items: center;
+        }
+        label {
+            background-color: var(--color-light-slate);
+            height: 28px;
+            border-radius: 14px;
+            position: relative;
+            display: block;
+            padding: 4px;
+            z-index: 1;
+            &::before {
+                content: "";
+                display: inline-block;
+                width: 33px;
+                height: 31px;
+                border-radius: 15px;
+                background-color: var(--color-dark-slate);
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                top: -1px;
+                right: -2px;
+                z-index: -1;
+            }
+            i {
+                z-index: 1;
+                display: inline-block;
+                height: 18px;
+                width: 18px;
+                font-size: .9em;
+                text-align: center;
+                &:first-of-type {
+                    margin-right: 12px;
+                }
+                &:last-of-type {
+                    color: var(--color-light-text);
+                }
+            }
+        }
+        input[type=checkbox]{
+            display: none;
+            &:checked {
+                & + label::before {
+                    right: initial;
+                    left: -2px;
+                }
+                & + label i {
+                    &:first-of-type {
+                        color: var(--color-light-text);
+                    }
+                    &:last-of-type {
+                        color: var(--color-dark-slate);
+                    }
+                }
+            }
+        }
+        button {
+            height: 40px;
+            width: 40px;
+            font-size: 1.3em;
+            background-color: transparent;
+        }
+    }
+    > section {
+        min-height: 130px;
+        padding: 1em;
+    }
+}
+
+.tmester {
+    &__menu {
+        display: none;
+    }
+    &__screen {
+        height: 180px;
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+    &__notes,
+    &__bpm-controls {
+        background-color: #EBF1F3;
+        display: inherit;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__notes {
+        color: white;
+        row-gap: 10px;
+        ul {
+            list-style-type: none;
+            display: inherit;
+            padding: 0;
+            margin: 0;
+            column-gap: 5px;
+            justify-content: center;
+            li {
+                height: 60px;
+                width: 60px;
+                background-color: var(--color-dark);
+                color: inherit;
+                border-radius: 5px;
+                font-size: 2em;
+                text-align: center;
+                padding: 12px 0;
+            }
+        }
+        button {
+            background-color: var(--color-dark);
+            color: inherit;
+            width: 240px;
+            height: 60px;
+            border-radius: 5px;
+            font-size: 1.6em;
+        }
+    }
+    &__bpm-controls {
+        button {
+            height: 50px;
+            width: 50px;
+        }
+    }
+}

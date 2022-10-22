@@ -1,0 +1,15 @@
+{
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@helpers/*": ["src/helpers/*"],
+            "@styles/*": ["src/styles/*"],
+            "@scripts/*": ["src/scripts/*"],
+            "@assets/*": ["src/assets/*"],
+        }
+    }
+}
