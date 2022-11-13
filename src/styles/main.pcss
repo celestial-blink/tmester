@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components {
+    .tmester--darkmode {
+        + label {
+            @apply
+            block h-7 rounded-xl relative
+            z-[1] p-1 px-2
+            bg-_color-light-slate text-_color-dark
+            before:block before:w-[31px] before:h-[31px] before:absolute
+            before:bg-_color-dark-slate before:-z-10 before:rounded-2xl
+            before:bottom-0 before:top-[-1px] before:right-[2px] 
+            dark:before:bg-_color-light-slate;
+        }
+        &:checked + label {
+            &:before {
+                @apply right-[30px];
+            }
+            i {
+                &:first-of-type {
+                    @apply text-_color-light-slate dark:text-_color-dark;
+                }
+                &:last-of-type {
+                    @apply text-_color-dark-slate dark:text-_color-light-slate;
+                }
+            }
+        }
+    }
+   .tmester--focus {
+        .tmester & {
+           @apply bg-_color-dark-theme text-white relative dark:bg-_color-cyan;
+        }
+   }
+}

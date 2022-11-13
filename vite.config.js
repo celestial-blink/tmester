@@ -1,7 +1,10 @@
+/* eslint-disable no-undef */
 import { defineConfig } from 'vite';
 import path from 'path';
 
 import nested from 'postcss-nested';
+// import tailwindnesting from 'tailwindcss/nesting';
+import tailwindcss from 'tailwindcss';
 
 export default defineConfig({
     base: "/",
@@ -9,7 +12,10 @@ export default defineConfig({
         devSourcemap: true,
         postcss: {
             plugins: [
-                nested({ preserveEmpty: false })
+                // tailwindnesting(),
+                tailwindcss(),
+                nested({ preserveEmpty: false }),
+                
             ]
         }
     },
@@ -23,5 +29,8 @@ export default defineConfig({
             "@scripts": path.resolve(__dirname, "./src/scripts/"),
             "@assets": path.resolve(__dirname, "./src/assets/")
         }
+    },
+    build: {
+        minify: true
     }
 });
