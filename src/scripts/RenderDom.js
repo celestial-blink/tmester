@@ -2,6 +2,7 @@ import { TRedux } from '@scripts/TRedux';
 import getRandomNumber from '@helpers/getRandomNumber';
 import pathImages from '@assets/pathImages';
 import Storage from '@helpers/Storage';
+// import defaultValues from '@assets/defaultValues';
 
 const storage = Storage();
 
@@ -16,7 +17,7 @@ export const renderMenu = _ => {
     } else {
         menuElement.classList.add("hidden");
         document.body.classList.remove("overflow-hidden");
-    };  
+    }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -41,7 +42,7 @@ let buttonsBPM = null;
 
 export const renderStart = _ => {
     
-    if (startButton === null) { startButton = document.getElementById("play") };
+    if (startButton === null) { startButton = document.getElementById("play") }
     if (buttonsBPM === null) buttonsBPM = document.getElementById("buttons-bpm");
 
     const state = TRedux.getState;
@@ -74,21 +75,20 @@ const randomNotes = _ => {
     return getRandom;
 }
 
-// let imageElement = null;
+
 let intervalAuto = null;
 const newRandomNotes = randomNotes();
 const newRandomNotes2 = randomNotes();
 
-const audio = new Audio("/sound.wav");
 const audio1 = new Audio("/metronome_1.mp3");
 const audio2 = new Audio("/metronome_2.mp3");
 
 const dataAudio = [ audio1, audio2 ];
+let indexAudio = 0;
 
 const handleAutoRandom = bpm => {
     
     clearInterval(intervalAuto);
-    let indexAudio = 0;
     intervalAuto = setInterval(_ => {
         const isLast = handleFocusNote();
         if (isLast) {
@@ -147,8 +147,11 @@ export const handlePrepareNotes = _ => {
         const numRand2 = newRandomNotes2(state?.currentNotes?.length);
         item.firstElementChild.src = pathImages[selectImages[numRand]];
         item.lastElementChild.textContent = state?.currentNotes[numRand2];
+        item.lastElementChild.dataset.index = numRand2;
         dataNextNotes[index].firstElementChild.src = pathImages[selectImages[numRand]];
         dataNextNotes[index].lastElementChild.textContent = state?.currentNotes[numRand2];
+        dataNextNotes[index].lastElementChild.dataset.index = numRand2;
+
     });
     prepareNewNotes({ element: dataNextNotes, images: selectImages, notes: state?.currentNotes });
 
@@ -182,5 +185,22 @@ const prepareNewNotes = ({ element, images, notes }) => {
 
     element[numRand].firstElementChild.src = pathImages[images[numRand2]];
     element[numRand].lastElementChild.textContent = notes[numRand3];
+    element[numRand].lastElementChild.dataset.index = numRand3;
     element[numRand].classList.add("tmester--focus");
+}
+
+
+export const handleSetCipher = _ => {
+    if (selectedNotesElement === null) selectedNotesElement = document.getElementById("selected-notes");
+    if (selectedNotes === null) selectedNotes = selectedNotesElement.querySelectorAll("div");
+    if (nextNotes === null) nextNotes = document.getElementById("next-notes").querySelectorAll("div");
+    const dataNextNotes = [...nextNotes];
+
+    [...selectedNotes].forEach((item, index) => {
+        const elementP = item.lastElementChild;
+        elementP.textContent = TRedux.getState.currentNotes[elementP.dataset.index];
+        const elementPnext = dataNextNotes[index].lastElementChild;
+        dataNextNotes[index].lastElementChild.textContent = TRedux.getState.currentNotes[elementPnext.dataset.index];
+    });
+
 }

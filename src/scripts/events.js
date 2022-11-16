@@ -2,7 +2,9 @@ import { TActions, TRedux } from './TRedux';
 import setElement from '@helpers/setElement';
 import pathImages from '@assets/pathImages';
 import Storage from '@helpers/Storage';
-import { handlePrepareNotes } from './RenderDom';
+import { handlePrepareNotes, handleSetCipher } from './RenderDom';
+import defaultValues from "@assets/defaultValues";
+
 
 /* ---------------------------- events for TRedux --------------------------- */
 
@@ -47,6 +49,7 @@ export const toggleCountDown = event => {
 /* ---------------------------- events personalized ---------------------------- */
 
 // export const eventsPersonalized = (selector = "", evref = "", callback = _ => { }) => {
+
 export const eventsPersonalized = event => {
     if (event.target.dataset.evref === event.detail.evref) event.detail?.callback?.();
 }
@@ -165,4 +168,46 @@ export const handleCheck = event => {
         handlePrepareNotes();
     }, 1000)
 
+}
+
+
+/* --------------------------------- extras --------------------------------- */
+
+let elementExtras = null;
+export const handleConfigExtras = _ => {
+    if (elementExtras === null) elementExtras = document.getElementById("extras");
+    const extrasData = storage.getValue('extras');
+    if (extrasData) {
+        elementExtras.cipher.checked = extrasData.includes("cipherAmerican");
+    } else {
+        elementExtras.cipher.checked = true;
+        storage.setValue({ key: "extras", value: ["cipherAmerican"] });
+    }
+}
+
+// let timeExtrasCheck = null;
+
+export const handleCheckExtras = event => {
+
+    const { currentTarget, target } = event;
+    const extrasSelected = currentTarget.querySelectorAll("input[type=checkbox]:checked");
+    const prepareExtras = [...extrasSelected].map(item => {
+        return item.value;
+    });
+
+    storage.setValue({
+        key: "extras",
+        value: prepareExtras
+    });
+
+    if (target.value === "cipherAmerican") {
+        TRedux.dispatch = TActions.setCurrentNotes( target.checked && defaultValues.defaultNotes || defaultValues.notes )
+    }
+
+    handleSetCipher(target.checked);
+
+    // clearTimeout(timeExtrasCheck);
+    // timeExtrasCheck = setTimeout(_ => {
+    //     handlePrepareNotes();
+    // }, 1000)
 }

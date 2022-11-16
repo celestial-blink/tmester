@@ -13,8 +13,11 @@ import {
     decreaseLongBPM,
     decreaseShortBPM,
     handleStartApp,
-    handleCheck
+    handleCheck,
+    handleConfigExtras,
+    handleCheckExtras
 } from '@scripts/Events';
+
 import { 
     renderMenu,
     renderBPM,
@@ -22,9 +25,16 @@ import {
     handlePrepareNotes
 } from '@scripts/RenderDom';
 
+import Storage from '@helpers/Storage';
+
+
+
 const prepareDefaultData = _ => {
-    TRedux.dispatch = TActions.setCurrentNotes(defaultValues.defaultNotes);
-    TRedux.dispatch = TActions.setAllNotes(defaultValues.defaultNotes);
+    const storage = Storage();
+    const extras = storage.getValue("extras");
+    const selectNotes = extras && extras.includes("cipherAmerican") ? defaultValues.defaultNotes : defaultValues.notes;
+    TRedux.dispatch = TActions.setCurrentNotes(selectNotes);
+    
 };
 
 const prepareEvents = _ => {
@@ -37,6 +47,7 @@ const prepareEvents = _ => {
     document.getElementById("decreaseLong").addEventListener('click', decreaseLongBPM);
     document.getElementById("play").addEventListener('click', handleStartApp);
     document.getElementById("form-notes").addEventListener('input', handleCheck);
+    document.getElementById("extras").addEventListener("input", handleCheckExtras);
     document.getElementById("elm-menu").addEventListener('click', event => {
         event.target.dispatchEvent(new CustomEvent("customClickMenu", {
             detail: {
@@ -54,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
     prepareDefaultData();
     prepareEvents();
     TRedux.subscribe = () => {
-        console.log(TRedux.getState);
         renderMenu();
         renderBPM();
         renderStart();
@@ -62,4 +72,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     handleStartTheme();
     handlePrepareNotes();
+    handleConfigExtras();
 });
