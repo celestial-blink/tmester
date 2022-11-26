@@ -80,8 +80,8 @@ let intervalAuto = null;
 const newRandomNotes = randomNotes();
 const newRandomNotes2 = randomNotes();
 
-const audio1 = new Audio("/metronome_1.mp3");
-const audio2 = new Audio("/metronome_2.mp3");
+const audio1 = new Audio("metronome_1.mp3");
+const audio2 = new Audio("metronome_2.mp3");
 
 const dataAudio = [ audio1, audio2 ];
 let indexAudio = 0;
