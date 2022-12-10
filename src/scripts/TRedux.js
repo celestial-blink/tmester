@@ -89,7 +89,6 @@ const TActions = {
     setCurrentImagePath: payload => ({ type: "SET_CURRENT_IMAGE_PATH", payload }),
     setCurrentNotes: payload => ({ type: "SET_CURRENT_NOTES", payload }),
     setStart: payload => ({ type: "SET_START", payload }),
-    // setAllNotes: payload => ({ type: "SET_ALL_NOTES", payload }),
     setCountDown: payload => ({ type: "SET_COUNT_DOWN", payload }),
     setCustom: payload => ({ type: "SET_CUSTOM", payload }),
     onReset: _ => ({ type: "RESET" })

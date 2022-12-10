@@ -22,7 +22,8 @@ export default defineConfig(({ mode }) => {
             }
         },
         server: {
-            port: 1111
+            port: 1111,
+            host: true
         },
         resolve: {
             alias: {
